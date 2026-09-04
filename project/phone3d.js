@@ -415,9 +415,76 @@ class Phone3D extends HTMLElement {
       paintScreen(this.screenCanvas, index);
       if (this.screenTexture) this.screenTexture.needsUpdate = true;
     }
+    if (this.mode === 'flat') this.drawFlat();
   }
 
+  // The 3D model needs a real network fetch (three.js from a CDN) and a
+  // working WebGL context — either can be unavailable (offline preview,
+  // restrictive network/CSP, a browser with WebGL disabled). Rather than
+  // leave an empty <canvas> with no visible failure, fall back to a plain
+  // 2D rendering of the same screen art the 3D display texture uses.
   async boot() {
+    try {
+      await this.boot3D();
+      this.mode = '3d';
+    } catch (err) {
+      console.error('[phone-3d] 3D render unavailable, falling back to a flat 2D mockup:', err);
+      this.bootFlat();
+    }
+  }
+
+  bootFlat() {
+    this.mode = 'flat';
+    // A canvas's context type (2d vs webgl) is fixed for its lifetime — if
+    // 3D setup got as far as handing this.canvas to WebGLRenderer before
+    // failing, getContext('2d') on it would return null. Swap in a fresh
+    // element so the fallback always gets a clean 2D context.
+    const fresh = document.createElement('canvas');
+    fresh.style.cssText = this.canvas.style.cssText;
+    this.canvas.replaceWith(fresh);
+    this.canvas = fresh;
+    this.flatBuffer = document.createElement('canvas');
+    this.flatBuffer.width = 904; this.flatBuffer.height = Math.round(904 * (H / W));
+    this.screenCanvas = this.flatBuffer;
+    paintScreen(this.flatBuffer, this.screenIndex);
+    // A static CSS tilt so the fallback still reads as "a phone", not a flat
+    // screenshot — cheap, and needs neither WebGL nor drag interaction.
+    this.canvas.style.transform = 'perspective(1200px) rotateY(-14deg) rotateX(6deg)';
+    this.canvas.style.cursor = 'default';
+    const ro = new ResizeObserver(() => this.drawFlat());
+    ro.observe(this);
+    this.drawFlat();
+  }
+
+  drawFlat() {
+    const ctx = this.canvas.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const cw = Math.max(this.clientWidth, 1), ch = Math.max(this.clientHeight, 1);
+    this.canvas.width = cw * dpr; this.canvas.height = ch * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cw, ch);
+
+    // Fit a W:H(+bezel) phone silhouette inside the container.
+    const aspect = W / (H + 60);
+    let bodyH = ch * 0.94, bodyW = bodyH * aspect;
+    if (bodyW > cw * 0.94) { bodyW = cw * 0.94; bodyH = bodyW / aspect; }
+    const bx = (cw - bodyW) / 2, by = (ch - bodyH) / 2;
+    const p = pen(ctx);
+    const grad = ctx.createLinearGradient(bx, by, bx + bodyW, by + bodyH);
+    grad.addColorStop(0, '#4a4d57'); grad.addColorStop(0.4, '#1a1b20'); grad.addColorStop(1, '#0a0b0e');
+    p.rr(bx, by, bodyW, bodyH, bodyW * 0.12, grad);
+
+    const pad = bodyW * 0.026;
+    const sx = bx + pad, sy = by + pad, sw = bodyW - pad * 2, sh = bodyH - pad * 2;
+    ctx.save();
+    p.rr(sx, sy, sw, sh, sw * 0.14, C.bg);
+    ctx.clip();
+    ctx.drawImage(this.flatBuffer, sx, sy, sw, sh);
+    ctx.restore();
+    p.rr(bx + bodyW / 2 - bodyW * 0.09, by + pad * 0.6, bodyW * 0.18, pad * 0.9, pad * 0.4, '#000');
+  }
+
+  async boot3D() {
     const THREE = await import(THREE_URL);
     this.THREE = THREE;
     if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (e) { /* ignore */ } }
