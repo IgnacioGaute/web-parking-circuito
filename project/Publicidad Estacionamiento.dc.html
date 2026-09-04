@@ -61,6 +61,10 @@
     [data-topbar] { flex-wrap: wrap !important; justify-content: center !important;
       gap: 12px !important; }
     [data-topnav] { gap: 16px !important; }
+    /* The header wrapping to two lines below 620px makes it taller than
+       the 60px the rail's sticky offset assumes above that breakpoint —
+       widen the offset here so the header still doesn't overlap the tour. */
+    #funciones [data-rail] { top: 116px !important; height: calc(100vh - 116px) !important; }
   }
 </style>
 </helmet>
@@ -124,7 +128,7 @@
        two wheel notches each, so a single flick can't skip one. (A 720vh rail
        charged ~950px per screen; 620px here made one notch skip a whole one.) -->
   <section id="funciones" ref="{{ railRef }}" style="position: relative; height: calc(100vh + 1240px); padding: 0 28px;">
-    <div data-rail="" style="position: sticky; top: 0; height: 100vh; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; max-width: 1180px; margin: 0 auto;">
+    <div data-rail="" style="position: sticky; top: 60px; height: calc(100vh - 60px); display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; max-width: 1180px; margin: 0 auto;">
 
       <div style="display: flex; flex-direction: column;">
         <div data-copy-wrap="" style="position: relative; min-height: 380px;">
