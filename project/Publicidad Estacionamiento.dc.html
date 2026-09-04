@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #0a0b0d; color: #e6e7ea; font-family: Manrope, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: #d9a441; text-decoration: none; }
+  a:hover { color: #e8bd6b; }
+  @keyframes pulseDot { 0%,100% { opacity: 1 } 50% { opacity: .3 } }
+  @keyframes attentionGlow { 0%,100% { box-shadow: 0 0 0 0 rgba(240,97,110,.45) } 50% { box-shadow: 0 0 0 6px rgba(240,97,110,0) } }
+  @keyframes floatY { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: translateY(0) } }
+  @keyframes sheen { from { transform: translateX(-120%) rotate(8deg) } to { transform: translateX(220%) rotate(8deg) } }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; background: #0a0b0d; background-image: radial-gradient(70vw 50vh at 88% -6%, rgba(217,164,65,.18) 0%, transparent 78%), radial-gradient(rgba(255,255,255,.05) 1px, transparent 0); background-size: auto, 14px 14px; overflow-x: clip;">
+
+  <div style="position: sticky; top: 0; z-index: 40; backdrop-filter: blur(14px); background: rgba(10,11,13,.72); border-bottom: 1px solid rgba(255,255,255,.07);">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
+      <div style="display: flex; align-items: center; gap: 11px;">
+        <div style="width: 30px; height: 30px; border-radius: 9px; background: #d9a441; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 5px rgba(217,164,65,.08);">
+          <div style="width: 17px; height: 3.5px; border-radius: 2px; background: #0a0b0d; transform: rotate(-24deg);"></div>
+        </div>
+        <span style="font-weight: 800; font-size: 15px; letter-spacing: -0.02em;">Control de Estacionamiento</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 26px; font-size: 13.5px; font-weight: 600; color: #8b8d97;">
+        <a href="#funciones" style="color: #8b8d97;">Funciones</a>
+        <a href="#extras" style="color: #8b8d97;">Extras</a>
+        <a href="#instalar" style="background: #d9a441; color: #0a0b0d; padding: 9px 16px; border-radius: 10px; font-weight: 700;">Instalar la app</a>
+      </div>
+    </div>
+  </div>
+
+  <section style="max-width: 1180px; margin: 0 auto; padding: 74px 28px 96px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center;">
+    <div style="animation: riseIn .7s both;">
+      <div style="display: inline-flex; align-items: center; gap: 7px; background: rgba(52,211,153,.14); border-radius: 999px; padding: 7px 13px; margin-bottom: 26px;">
+        <span style="width: 6px; height: 6px; border-radius: 50%; background: #34d399; animation: pulseDot 2s ease-in-out infinite;"></span>
+        <span style="font-size: 11.5px; font-weight: 700; color: #34d399;">Sistema activo</span>
+      </div>
+      <h1 style="margin: 0 0 22px; font-size: 62px; line-height: 1.02; letter-spacing: -0.035em; font-weight: 800; text-wrap: balance;">Entradas y salidas,<br />en un toque.</h1>
+      <p style="margin: 0 0 34px; font-size: 19px; line-height: 1.55; color: #8b8d97; max-width: 30ch; text-wrap: pretty;">La app para el encargado de la playa: registrás la patente, ves quién está dentro y cerrás el turno sin papel ni planillas.</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 34px;">
+        <a href="#instalar" style="background: #d9a441; color: #0a0b0d; font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 13px;">Instalar la app</a>
+        <a href="#funciones" style="border: 1px solid rgba(255,255,255,.16); color: #e6e7ea; font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 13px;">Ver cómo funciona</a>
+      </div>
+      <div style="display: flex; gap: 30px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,.08);">
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 25px; font-weight: 700; color: #d9a441;">2 seg</div>
+          <div style="font-size: 12px; color: #5b5d66; font-weight: 600; margin-top: 4px;">por registro</div>
+        </div>
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 25px; font-weight: 700;">0</div>
+          <div style="font-size: 12px; color: #5b5d66; font-weight: 600; margin-top: 4px;">planillas de papel</div>
+        </div>
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 25px; font-weight: 700;">100%</div>
+          <div style="font-size: 12px; color: #5b5d66; font-weight: 600; margin-top: 4px;">offline en el celu</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; perspective: 1400px;">
+      <div style="animation: floatY 7s ease-in-out infinite;">
+        <div style="transform: rotateY(-19deg) rotateX(7deg); transform-style: preserve-3d; filter: drop-shadow(0 50px 70px rgba(0,0,0,.65));">
+          <div style="position: absolute; inset: 0; border-radius: 54px; background: #06070a; transform: translateZ(-13px);"></div>
+          <div style="width: 300px; height: 616px; border-radius: 54px; padding: 11px; background: linear-gradient(150deg, #3b3d45 0%, #14151a 32%, #24262d 62%, #0d0e12 100%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);">
+            <div style="width: 100%; height: 100%; border-radius: 44px; background: #0a0b0d; overflow: hidden; position: relative; display: flex; flex-direction: column;">
+              <div style="position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 78px; height: 22px; border-radius: 999px; background: #000; z-index: 5;"></div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 22px 4px; font-size: 11px; font-weight: 700; font-family: 'IBM Plex Mono', monospace;">
+                <span>9:41</span>
+                <span style="color: #8b8d97;">▮▮▮</span>
+              </div>
+              <div style="flex: 1; padding: 16px 14px; display: flex; flex-direction: column; gap: 11px; background-image: radial-gradient(50vw 30vh at 100% 0%, rgba(217,164,65,.16) 0%, transparent 80%);">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div>
+                    <div style="font-size: 9.5px; font-weight: 700; letter-spacing: .06em; color: #5b5d66;">TURNO ACTIVO</div>
+                    <div style="font-size: 15px; font-weight: 800; margin-top: 3px;">Ignacio G.</div>
+                  </div>
+                  <div style="font-family: 'IBM Plex Mono', monospace; font-size: 19px; font-weight: 700; color: #d9a441;">09:41</div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <div style="flex: 1; background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 15px; padding: 12px;">
+                    <div style="font-size: 9px; font-weight: 700; letter-spacing: .05em; color: #5b5d66;">DENTRO</div>
+                    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 21px; font-weight: 700; color: #d9a441; margin-top: 9px;">24</div>
+                  </div>
+                  <div style="flex: 1; background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 15px; padding: 12px;">
+                    <div style="font-size: 9px; font-weight: 700; letter-spacing: .05em; color: #5b5d66;">HOY</div>
+                    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 21px; font-weight: 700; margin-top: 9px;">86</div>
+                  </div>
+                  <div style="flex: 1; background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 15px; padding: 12px;">
+                    <div style="font-size: 9px; font-weight: 700; letter-spacing: .05em; color: #5b5d66;">PROM.</div>
+                    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 21px; font-weight: 700; margin-top: 9px;">1h 12m</div>
+                  </div>
+                </div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 11px;">
+                  <div style="font-size: 11px; font-weight: 700; color: #8b8d97;">Nueva entrada</div>
+                  <div style="background: #151619; border: 1px solid rgba(217,164,65,.5); border-radius: 12px; padding: 12px 13px; font-family: 'IBM Plex Mono', monospace; font-size: 19px; font-weight: 700; letter-spacing: .1em; box-shadow: 0 0 0 3px rgba(217,164,65,.08);">AB 421 KJ</div>
+                  <div style="display: flex; gap: 8px;">
+                    <div style="flex: 1; text-align: center; background: rgba(217,164,65,.18); color: #d9a441; border-radius: 11px; padding: 9px; font-size: 12px; font-weight: 700;">Auto</div>
+                    <div style="flex: 1; text-align: center; background: #17181d; color: #8b8d97; border-radius: 11px; padding: 9px; font-size: 12px; font-weight: 700;">Moto</div>
+                  </div>
+                  <div style="background: #d9a441; color: #0a0b0d; text-align: center; border-radius: 12px; padding: 12px; font-size: 13px; font-weight: 800; position: relative; overflow: hidden;">
+                    Registrar entrada
+                    <div style="position: absolute; top: -40%; left: 0; width: 40%; height: 180%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent); animation: sheen 3.4s ease-in-out infinite;"></div>
+                  </div>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-around; padding: 10px 6px 18px; border-top: 1px solid rgba(255,255,255,.08); background: #0a0b0d;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px; color: #d9a441;">
+                  <div style="width: 17px; height: 17px; border-radius: 5px; border: 2px solid currentColor;"></div>
+                  <span style="font-size: 8.5px; font-weight: 700;">Registrar</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px; color: #5b5d66;">
+                  <div style="width: 17px; height: 17px; border-radius: 50%; border: 2px solid currentColor;"></div>
+                  <span style="font-size: 8.5px; font-weight: 700;">Dentro</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px; color: #5b5d66;">
+                  <div style="width: 17px; height: 17px; border-radius: 3px; border: 2px solid currentColor; transform: rotate(45deg);"></div>
+                  <span style="font-size: 8.5px; font-weight: 700;">Historial</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px; color: #5b5d66;">
+                  <div style="width: 17px; height: 17px; border-top: 2px solid currentColor; border-right: 2px solid currentColor;"></div>
+                  <span style="font-size: 8.5px; font-weight: 700;">Stats</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="funciones" ref="{{ railRef }}" style="position: relative; height: 620vh; padding: 0 28px;">
+    <div style="position: sticky; top: 0; height: 100vh; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; max-width: 1180px; margin: 0 auto;">
+
+      <div style="position: relative; min-height: 400px;">
+        <div style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 100%;">
+          <div data-copy="0" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 1; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">01 — REGISTRAR</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">La patente y listo</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Placa, tipo de vehículo y confirmar. Los campos opcionales quedan opcionales, y el auto pasa solo a la lista de "Dentro".</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Teclado de patente en mayúsculas, sin errores de tipeo</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Contadores de dentro, hoy y estadía promedio arriba</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Si es frecuente, se completa solo desde la visita anterior</li>
+            </ul>
+          </div>
+          <div data-copy="1" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">02 — DENTRO</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Quién está adentro, ahora</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Cada tarjeta muestra hace cuánto entró el vehículo. Buscás la placa, tocás "Registrar salida" y el egreso queda cerrado.</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Búsqueda por patente entre todos los vehículos dentro</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #f0616e;">·</span>Los que pasan el tiempo límite se marcan "Atención"</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Confirmación en pantalla antes de cerrar la salida</li>
+            </ul>
+          </div>
+          <div data-copy="2" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">03 — FRECUENTES</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Los de siempre, sin tipear</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Una patente aparece acá desde su segunda visita, con sus datos y su historial de movimientos guardados.</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Contador de visitas por vehículo</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Entrada en un toque desde la ficha</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Datos editables: dueño, teléfono, lo que necesites</li>
+            </ul>
+          </div>
+          <div data-copy="3" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">04 — HISTORIAL</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Todo queda, y se exporta</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Los registros se agrupan por día. Filtrás por placa, tipo, rango de fechas u horario, y bajás el día como PDF listo para imprimir.</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Export a PDF de un día puntual</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Quién registró la entrada y quién la salida</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Carga progresiva: la pantalla nunca se satura</li>
+            </ul>
+          </div>
+          <div data-copy="4" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">05 — ESTADÍSTICAS</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Cómo se movió la playa</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Ocupación, actividad por hora y ranking de operadores en gráficos animados. Un filtro y todos los gráficos se actualizan juntos.</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Picos por hora y por día de la semana</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Reparto entre autos y motos</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Filtros por fecha, tipo de vehículo y operador</li>
+            </ul>
+          </div>
+          <div data-copy="5" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">06 — USUARIOS Y TURNOS</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Quién está en turno</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Todos los operadores del sistema, con su rol y si están en turno en este momento. Cada movimiento queda firmado con su nombre.</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #34d399;">·</span>Estado en turno / fuera de turno en vivo</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Roles de administrador y operador</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Trazabilidad: nada queda sin autor</li>
+            </ul>
+          </div>
+        </div>
+        <div data-dots="" style="position: absolute; left: 0; bottom: 0; display: flex; gap: 7px;">
+          <span data-dot="0" style="width: 26px; height: 3px; border-radius: 2px; background: #d9a441; transition: background .3s;"></span>
+          <span data-dot="1" style="width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); transition: background .3s;"></span>
+          <span data-dot="2" style="width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); transition: background .3s;"></span>
+          <span data-dot="3" style="width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); transition: background .3s;"></span>
+          <span data-dot="4" style="width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); transition: background .3s;"></span>
+          <span data-dot="5" style="width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); transition: background .3s;"></span>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; perspective: 1500px;">
+        <div ref="{{ phoneRef }}" style="transform-style: preserve-3d; will-change: transform; filter: drop-shadow(0 46px 66px rgba(0,0,0,.7));">
+          <div style="position: absolute; inset: 0; border-radius: 54px; background: #06070a; transform: translateZ(-14px);"></div>
+          <div style="width: 306px; height: 630px; border-radius: 54px; padding: 11px; background: linear-gradient(150deg, #3b3d45 0%, #14151a 32%, #24262d 62%, #0d0e12 100%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);">
+            <div style="width: 100%; height: 100%; border-radius: 44px; background: #0a0b0d; overflow: hidden; position: relative;">
+              <div style="position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 78px; height: 22px; border-radius: 999px; background: #000; z-index: 8;"></div>
+
+              <div data-screen="0" style="position: absolute; inset: 0; padding: 44px 14px 14px; display: flex; flex-direction: column; gap: 10px; opacity: 1; transition: opacity .4s ease; background-image: radial-gradient(50vw 30vh at 100% 0%, rgba(217,164,65,.14) 0%, transparent 80%);">
+                <div style="display: flex; gap: 8px;">
+                  <div style="flex: 1; background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 15px; padding: 12px;">
+                    <div style="font-size: 9px; font-weight: 700; letter-spacing: .05em; color: #5b5d66;">DENTRO</div>
+                    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 21px; font-weight: 700; color: #d9a441; margin-top: 9px;">24</div>
+                  </div>
+                  <div style="flex: 1; background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 15px; padding: 12px;">
+                    <div style="font-size: 9px; font-weight: 700; letter-spacing: .05em; color: #5b5d66;">HOY</div>
+                    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 21px; font-weight: 700; margin-top: 9px;">86</div>
+                  </div>
+                  <div style="flex: 1; background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 15px; padding: 12px;">
+                    <div style="font-size: 9px; font-weight: 700; letter-spacing: .05em; color: #5b5d66;">PROM.</div>
+                    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 21px; font-weight: 700; margin-top: 9px;">1h 12m</div>
+                  </div>
+                </div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 11px;">
+                  <div style="font-size: 11px; font-weight: 700; color: #8b8d97;">Nueva entrada</div>
+                  <div style="background: #151619; border: 1px solid rgba(217,164,65,.5); border-radius: 12px; padding: 12px 13px; font-family: 'IBM Plex Mono', monospace; font-size: 19px; font-weight: 700; letter-spacing: .1em; box-shadow: 0 0 0 3px rgba(217,164,65,.08);">AB 421 KJ</div>
+                  <div style="display: flex; gap: 8px;">
+                    <div style="flex: 1; text-align: center; background: rgba(217,164,65,.18); color: #d9a441; border-radius: 11px; padding: 9px; font-size: 12px; font-weight: 700;">Auto</div>
+                    <div style="flex: 1; text-align: center; background: #17181d; color: #8b8d97; border-radius: 11px; padding: 9px; font-size: 12px; font-weight: 700;">Moto</div>
+                  </div>
+                  <div style="background: #151619; border: 1px dashed rgba(255,255,255,.16); border-radius: 12px; padding: 11px 13px; font-size: 11.5px; color: #5b5d66;">Cochera <span style="color: #8b8d97;">(opcional)</span></div>
+                  <div style="background: #d9a441; color: #0a0b0d; text-align: center; border-radius: 12px; padding: 12px; font-size: 13px; font-weight: 800;">Registrar entrada</div>
+                </div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 13px; display: flex; align-items: center; justify-content: space-between;">
+                  <div>
+                    <div style="font-size: 11.5px; font-weight: 700;">¿Es frecuente?</div>
+                    <div style="font-size: 10.5px; color: #5b5d66; margin-top: 3px;">Buscar por placa o nombre</div>
+                  </div>
+                  <div style="width: 26px; height: 26px; border-radius: 8px; background: rgba(217,164,65,.18); color: #d9a441; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;">↗</div>
+                </div>
+              </div>
+
+              <div data-screen="1" style="position: absolute; inset: 0; padding: 44px 14px 14px; display: flex; flex-direction: column; gap: 10px; opacity: 0; transition: opacity .4s ease;">
+                <div style="background: #151619; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 11px 13px; font-size: 12px; color: #5b5d66;">Buscar placa…</div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-weight: 700; letter-spacing: .05em; color: #5b5d66;">
+                  <span>24 VEHÍCULOS DENTRO</span>
+                  <span style="color: #f0616e;">1 ATENCIÓN</span>
+                </div>
+                <div style="background: #121317; border: 1px solid rgba(240,97,110,.35); border-radius: 16px; padding: 13px; animation: attentionGlow 2.4s ease-in-out infinite;">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 700; letter-spacing: .06em;">MJ 018 TR</span>
+                    <span style="font-size: 9.5px; font-weight: 700; color: #f0616e; background: rgba(240,97,110,.14); border-radius: 999px; padding: 4px 9px;">Atención</span>
+                  </div>
+                  <div style="font-size: 11px; color: #8b8d97; margin-top: 7px;">Auto · hace 4h 12m · Ignacio G.</div>
+                  <div style="margin-top: 11px; border: 1px solid rgba(255,255,255,.14); border-radius: 11px; padding: 9px; text-align: center; font-size: 12px; font-weight: 700;">Registrar salida</div>
+                </div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 13px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 700; letter-spacing: .06em;">AB 421 KJ</span>
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #34d399;">32m</span>
+                  </div>
+                  <div style="font-size: 11px; color: #8b8d97; margin-top: 7px;">Auto · Cochera B4</div>
+                  <div style="margin-top: 11px; border: 1px solid rgba(255,255,255,.14); border-radius: 11px; padding: 9px; text-align: center; font-size: 12px; font-weight: 700;">Registrar salida</div>
+                </div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 13px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 700; letter-spacing: .06em;">A 032 PLM</span>
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #34d399;">8m</span>
+                  </div>
+                  <div style="font-size: 11px; color: #8b8d97; margin-top: 7px;">Moto</div>
+                  <div style="margin-top: 11px; border: 1px solid rgba(255,255,255,.14); border-radius: 11px; padding: 9px; text-align: center; font-size: 12px; font-weight: 700;">Registrar salida</div>
+                </div>
+              </div>
+
+              <div data-screen="2" style="position: absolute; inset: 0; padding: 44px 14px 14px; display: flex; flex-direction: column; gap: 10px; opacity: 0; transition: opacity .4s ease;">
+                <div style="font-size: 13px; font-weight: 800;">Frecuentes</div>
+                <div style="background: #151619; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 11px 13px; font-size: 12px; color: #5b5d66;">Buscar placa o nombre…</div>
+                <div style="background: #121317; border: 1px solid rgba(217,164,65,.28); border-radius: 16px; padding: 13px; display: flex; align-items: center; gap: 11px;">
+                  <div style="width: 36px; height: 36px; border-radius: 11px; background: rgba(217,164,65,.18); color: #d9a441; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700;">12</div>
+                  <div style="flex: 1;">
+                    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 700; letter-spacing: .06em;">AB 421 KJ</div>
+                    <div style="font-size: 10.5px; color: #8b8d97; margin-top: 4px;">Marcela R. · última: hoy 08:14</div>
+                  </div>
+                  <span style="color: #d9a441; font-size: 15px;">›</span>
+                </div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 13px; display: flex; align-items: center; gap: 11px;">
+                  <div style="width: 36px; height: 36px; border-radius: 11px; background: #17181d; color: #8b8d97; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700;">7</div>
+                  <div style="flex: 1;">
+                    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 700; letter-spacing: .06em;">KLM 774</div>
+                    <div style="font-size: 10.5px; color: #8b8d97; margin-top: 4px;">Depósito 3 · última: ayer 19:40</div>
+                  </div>
+                  <span style="color: #5b5d66; font-size: 15px;">›</span>
+                </div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 13px; display: flex; align-items: center; gap: 11px;">
+                  <div style="width: 36px; height: 36px; border-radius: 11px; background: #17181d; color: #8b8d97; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700;">4</div>
+                  <div style="flex: 1;">
+                    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 700; letter-spacing: .06em;">A 032 PLM</div>
+                    <div style="font-size: 10.5px; color: #8b8d97; margin-top: 4px;">Moto · última: lun 07:55</div>
+                  </div>
+                  <span style="color: #5b5d66; font-size: 15px;">›</span>
+                </div>
+                <div style="margin-top: 4px; border: 1px dashed rgba(255,255,255,.16); border-radius: 14px; padding: 12px; font-size: 11px; color: #5b5d66; text-align: center;">Entrada en un toque desde la ficha</div>
+              </div>
+
+              <div data-screen="3" style="position: absolute; inset: 0; padding: 44px 14px 14px; display: flex; flex-direction: column; gap: 10px; opacity: 0; transition: opacity .4s ease;">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span style="font-size: 13px; font-weight: 800;">Historial</span>
+                  <span style="font-size: 10.5px; font-weight: 700; color: #d9a441; background: rgba(217,164,65,.18); border-radius: 999px; padding: 5px 10px;">PDF</span>
+                </div>
+                <div style="display: flex; gap: 7px;">
+                  <div style="flex: 1; background: #151619; border: 1px solid rgba(255,255,255,.08); border-radius: 11px; padding: 9px 11px; font-size: 11px; color: #5b5d66;">Buscar…</div>
+                  <div style="background: #151619; border: 1px solid rgba(255,255,255,.08); border-radius: 11px; padding: 9px 11px; font-size: 11px; color: #8b8d97;">Filtros</div>
+                </div>
+                <div style="font-size: 9.5px; font-weight: 700; letter-spacing: .06em; color: #5b5d66; margin-top: 3px;">HOY · 86 REGISTROS</div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 11px 13px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; font-weight: 700;">AB 421 KJ</div>
+                    <div style="font-size: 10px; color: #5b5d66; margin-top: 3px;">08:14 → 09:46</div>
+                  </div>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8b8d97;">1h 32m</span>
+                </div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 11px 13px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; font-weight: 700;">KLM 774</div>
+                    <div style="font-size: 10px; color: #5b5d66; margin-top: 3px;">07:52 → 12:05</div>
+                  </div>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8b8d97;">4h 13m</span>
+                </div>
+                <div style="font-size: 9.5px; font-weight: 700; letter-spacing: .06em; color: #5b5d66; margin-top: 3px;">AYER · 91 REGISTROS</div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 11px 13px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; font-weight: 700;">A 032 PLM</div>
+                    <div style="font-size: 10px; color: #5b5d66; margin-top: 3px;">18:20 → 19:40</div>
+                  </div>
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8b8d97;">1h 20m</span>
+                </div>
+                <div style="border: 1px solid rgba(255,255,255,.14); border-radius: 12px; padding: 10px; text-align: center; font-size: 11.5px; font-weight: 700; color: #8b8d97;">Cargar más</div>
+              </div>
+
+              <div data-screen="4" style="position: absolute; inset: 0; padding: 44px 14px 14px; display: flex; flex-direction: column; gap: 10px; opacity: 0; transition: opacity .4s ease;">
+                <div style="font-size: 13px; font-weight: 800;">Estadísticas</div>
+                <div style="display: flex; gap: 8px;">
+                  <div style="flex: 1; background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 12px;">
+                    <div style="font-size: 10px; font-weight: 600; color: #8b8d97;">Movimientos</div>
+                    <div style="font-size: 22px; font-weight: 800; margin-top: 8px;">1.284</div>
+                  </div>
+                  <div style="flex: 1; background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 12px;">
+                    <div style="font-size: 10px; font-weight: 600; color: #8b8d97;">Pico</div>
+                    <div style="font-size: 22px; font-weight: 800; margin-top: 8px;">18h</div>
+                  </div>
+                </div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 13px;">
+                  <div style="font-size: 10.5px; font-weight: 700; color: #8b8d97; margin-bottom: 10px;">Actividad por hora</div>
+                  <svg viewBox="0 0 240 74" style="width: 100%; height: 74px; display: block;">
+                    <polyline points="4,62 32,50 60,54 88,32 116,38 144,16 172,26 200,10 232,22" fill="none" stroke="#d9a441" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline points="4,68 32,64 60,66 88,58 116,60 144,50 172,56 200,46 232,52" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                  </svg>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <div style="flex: 1; background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 13px; display: flex; flex-direction: column; align-items: center; gap: 9px;">
+                    <svg viewBox="0 0 42 42" style="width: 74px; height: 74px;">
+                      <circle cx="21" cy="21" r="16" fill="none" stroke="#17181d" stroke-width="7"></circle>
+                      <circle cx="21" cy="21" r="16" fill="none" stroke="#d9a441" stroke-width="7" stroke-dasharray="74 100" stroke-linecap="round" transform="rotate(-90 21 21)"></circle>
+                    </svg>
+                    <div style="font-size: 10px; color: #8b8d97;">74% autos</div>
+                  </div>
+                  <div style="flex: 1; background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 13px; display: flex; flex-direction: column; gap: 9px; justify-content: center;">
+                    <div style="font-size: 10px; color: #8b8d97;">Top operador</div>
+                    <div style="height: 7px; border-radius: 4px; background: #d9a441; width: 86%;"></div>
+                    <div style="height: 7px; border-radius: 4px; background: rgba(217,164,65,.45); width: 62%;"></div>
+                    <div style="height: 7px; border-radius: 4px; background: rgba(255,255,255,.16); width: 38%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div data-screen="5" style="position: absolute; inset: 0; padding: 44px 14px 14px; display: flex; flex-direction: column; gap: 10px; opacity: 0; transition: opacity .4s ease;">
+                <div style="font-size: 13px; font-weight: 800;">Usuarios</div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 13px; display: flex; align-items: center; gap: 11px;">
+                  <div style="width: 34px; height: 34px; border-radius: 50%; background: rgba(217,164,65,.18); color: #d9a441; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700;">IG</div>
+                  <div style="flex: 1;">
+                    <div style="font-size: 12.5px; font-weight: 700;">Ignacio G.</div>
+                    <div style="font-size: 10px; color: #d9a441; margin-top: 3px;">Administrador</div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 5px; background: rgba(52,211,153,.14); border-radius: 999px; padding: 4px 9px;">
+                    <span style="width: 5px; height: 5px; border-radius: 50%; background: #34d399; animation: pulseDot 2s ease-in-out infinite;"></span>
+                    <span style="font-size: 9px; font-weight: 700; color: #34d399;">En turno</span>
+                  </div>
+                </div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 13px; display: flex; align-items: center; gap: 11px;">
+                  <div style="width: 34px; height: 34px; border-radius: 50%; background: #17181d; color: #8b8d97; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700;">MR</div>
+                  <div style="flex: 1;">
+                    <div style="font-size: 12.5px; font-weight: 700;">Marcela R.</div>
+                    <div style="font-size: 10px; color: #5b5d66; margin-top: 3px;">Operador</div>
+                  </div>
+                  <span style="font-size: 9px; font-weight: 700; color: #5b5d66;">Fuera de turno</span>
+                </div>
+                <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 13px; display: flex; align-items: center; gap: 11px;">
+                  <div style="width: 34px; height: 34px; border-radius: 50%; background: #17181d; color: #8b8d97; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700;">JP</div>
+                  <div style="flex: 1;">
+                    <div style="font-size: 12.5px; font-weight: 700;">Juan P.</div>
+                    <div style="font-size: 10px; color: #5b5d66; margin-top: 3px;">Operador</div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 5px; background: rgba(52,211,153,.14); border-radius: 999px; padding: 4px 9px;">
+                    <span style="width: 5px; height: 5px; border-radius: 50%; background: #34d399;"></span>
+                    <span style="font-size: 9px; font-weight: 700; color: #34d399;">En turno</span>
+                  </div>
+                </div>
+                <div style="margin-top: 4px; border: 1px dashed rgba(255,255,255,.16); border-radius: 14px; padding: 12px; font-size: 11px; color: #5b5d66; text-align: center;">Cada entrada y salida queda firmada</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="extras" style="max-width: 1180px; margin: 0 auto; padding: 40px 28px 96px;">
+    <div style="max-width: 46ch; margin-bottom: 44px;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">07 — EL RESTO DEL SISTEMA</div>
+      <h2 style="margin: 16px 0 14px; font-size: 42px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Configurable por quien la usa</h2>
+      <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #8b8d97; text-wrap: pretty;">La playa cambia y el sistema se adapta sin tocar código.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+      <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px;">
+        <div style="width: 34px; height: 34px; border-radius: 11px; background: rgba(217,164,65,.18); color: #d9a441; display: flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 18px;">＋</div>
+        <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em;">Campos personalizados</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #8b8d97;">Agregá al formulario los campos que necesites — texto, número, sí/no o lista — y ordenálos arrastrando. Placa y tipo quedan fijos.</p>
+      </div>
+      <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px;">
+        <div style="width: 34px; height: 34px; border-radius: 11px; background: rgba(240,97,110,.14); color: #f0616e; display: flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 18px;">!</div>
+        <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em;">Alertas de tiempo</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #8b8d97;">Definís cuántos minutos puede estar un vehículo dentro. Al pasarse, la tarjeta se marca "Atención" para todos los operadores.</p>
+      </div>
+      <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px;">
+        <div style="width: 34px; height: 34px; border-radius: 11px; background: rgba(217,164,65,.18); color: #d9a441; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-weight: 800;">••</div>
+        <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em;">Ingreso con PIN</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #8b8d97;">Cada operador elige su nombre y entra con un PIN de 4 dígitos. Rápido con guantes, y sin contraseñas anotadas en la garita.</p>
+      </div>
+      <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px;">
+        <div style="width: 34px; height: 34px; border-radius: 11px; background: rgba(52,211,153,.14); color: #34d399; display: flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 18px;">↓</div>
+        <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em;">Se instala como app</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #8b8d97;">Desde el navegador queda un ícono en la pantalla de inicio, a pantalla completa. No hace falta pasar por ninguna tienda.</p>
+      </div>
+      <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px;">
+        <div style="width: 34px; height: 34px; border-radius: 11px; background: rgba(217,164,65,.18); color: #d9a441; display: flex; align-items: center; justify-content: center; font-weight: 800;">?</div>
+        <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em;">Tour guiado</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #8b8d97;">Un recorrido paso a paso que resalta cada pantalla real de la app. Se abre cuando quieras desde el botón de ayuda: el operador nuevo aprende solo.</p>
+      </div>
+      <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px; display: flex; flex-direction: column;">
+        <div style="display: flex; gap: 7px; margin-bottom: 18px;">
+          <div style="width: 34px; height: 34px; border-radius: 11px; background: #0a0b0d; border: 1px solid rgba(255,255,255,.14);"></div>
+          <div style="width: 34px; height: 34px; border-radius: 11px; background: #f7f7f8; border: 1px solid rgba(255,255,255,.14);"></div>
+        </div>
+        <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em;">Modo claro y oscuro</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #8b8d97;">Oscuro para el turno noche, claro para el sol del mediodía. Cambia al instante y se recuerda en el dispositivo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="instalar" style="max-width: 1180px; margin: 0 auto; padding: 0 28px 110px;">
+    <div style="border: 1px solid rgba(217,164,65,.28); border-radius: 28px; padding: 62px 48px; text-align: center; background: radial-gradient(60% 100% at 50% 0%, rgba(217,164,65,.14) 0%, transparent 75%), #0e0f13;">
+      <h2 style="margin: 0 0 16px; font-size: 46px; line-height: 1.05; letter-spacing: -0.035em; font-weight: 800;">Probala en tu playa esta semana</h2>
+      <p style="margin: 0 auto 32px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 52ch; text-wrap: pretty;">Se instala en el celular del encargado en dos minutos. Los operadores, los campos del formulario y las alertas los configurás vos.</p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a href="#instalar" style="background: #d9a441; color: #0a0b0d; font-weight: 700; font-size: 15px; padding: 15px 28px; border-radius: 13px;">Instalar la app</a>
+        <a href="#funciones" style="border: 1px solid rgba(255,255,255,.16); color: #e6e7ea; font-weight: 700; font-size: 15px; padding: 15px 28px; border-radius: 13px;">Pedir una demo</a>
+      </div>
+    </div>
+    <div style="margin-top: 36px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 12.5px; color: #5b5d66; flex-wrap: wrap;">
+      <span>Control de Estacionamiento · registro de entradas y salidas de vehículos</span>
+      <span>Hecho para el encargado, no para la oficina.</span>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+const ROT_Y = [-24, 16, -18, 22, -10, 14];
+const ROT_X = [9, -5, 11, -4, 8, -6];
+const TZ = [0, -30, 10, -34, 0, -22];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.rail = null;
+    this.phone = null;
+    this.railRef = (el) => { this.rail = el; this.attach(); };
+    this.phoneRef = (el) => { this.phone = el; this.attach(); };
+    this.active = -1;
+  }
+
+  attach() {
+    if (!this.rail || !this.phone || this.attached) return;
+    this.attached = true;
+    this.screens = Array.from(this.phone.querySelectorAll('[data-screen]'));
+    this.copies = Array.from(this.rail.querySelectorAll('[data-copy]'));
+    this.dots = Array.from(this.rail.querySelectorAll('[data-dot]'));
+    this.onScroll = () => {
+      if (this.raf) return;
+      this.raf = requestAnimationFrame(() => { this.raf = null; this.update(); });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll);
+    this.update();
+  }
+
+  componentWillUnmount() {
+    if (this.onScroll) {
+      window.removeEventListener('scroll', this.onScroll);
+      window.removeEventListener('resize', this.onScroll);
+    }
+    if (this.raf) cancelAnimationFrame(this.raf);
+  }
+
+  update() {
+    const rect = this.rail.getBoundingClientRect();
+    const span = this.rail.offsetHeight - window.innerHeight;
+    const p = Math.max(0, Math.min(1, -rect.top / (span || 1)));
+    const n = ROT_Y.length;
+    const f = p * (n - 1);
+    const i = Math.min(n - 2, Math.floor(f));
+    const raw = f - i;
+    const t = raw * raw * (3 - 2 * raw);
+    const lerp = (a, b) => a + (b - a) * t;
+    this.phone.style.transform =
+      'rotateY(' + lerp(ROT_Y[i], ROT_Y[i + 1]).toFixed(2) + 'deg) rotateX(' +
+      lerp(ROT_X[i], ROT_X[i + 1]).toFixed(2) + 'deg) translateZ(' +
+      lerp(TZ[i], TZ[i + 1]).toFixed(1) + 'px) translateY(' +
+      (Math.sin(p * Math.PI * 2) * 10).toFixed(1) + 'px)';
+
+    const active = Math.round(f);
+    if (active === this.active) return;
+    this.active = active;
+    this.screens.forEach((el, k) => { el.style.opacity = k === active ? '1' : '0'; });
+    this.copies.forEach((el, k) => {
+      const on = k === active;
+      el.style.opacity = on ? '1' : '0';
+      el.style.transform = on ? 'translateY(0)' : 'translateY(' + (k < active ? -14 : 14) + 'px)';
+      el.style.pointerEvents = on ? 'auto' : 'none';
+    });
+    this.dots.forEach((el, k) => {
+      el.style.background = k === active ? '#d9a441' : 'rgba(255,255,255,.14)';
+    });
+  }
+
+  renderVals() {
+    return { railRef: this.railRef, phoneRef: this.phoneRef };
+  }
+}
+</script>
+</body>
+</html>
