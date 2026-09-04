@@ -2,6 +2,14 @@
 // canvas-texture app screens. No import map needed: three is pulled in by
 // full URL, and the orbit interaction is hand-rolled (~40 lines) instead of
 // loading the OrbitControls addon, which resolves a bare "three" specifier.
+//
+// Loaded as a plain <script> (not an x-import fetch) so the page also works
+// when opened straight off disk over file://, where fetch() is CORS-blocked.
+// The IIFE keeps generic names (C, W, H, pen, star…) out of global scope;
+// registering the custom element at the end is the only intended side effect.
+(function () {
+'use strict';
+
 const THREE_URL = 'https://unpkg.com/three@0.184.0/build/three.module.js';
 
 const C = {
@@ -752,3 +760,5 @@ class Phone3D extends HTMLElement {
 function THREE_DEG(v) { return (Number(v) || 0) * Math.PI / 180; }
 
 if (!customElements.get('phone-3d')) customElements.define('phone-3d', Phone3D);
+
+})();
