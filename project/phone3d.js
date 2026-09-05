@@ -375,8 +375,37 @@ function screenUsuarios(p) {
 // down by one when highlighting a tab.
 const SCREENS = [screenLogin, screenRegistrar, screenDentro, screenFrecuentes, screenHistorial, screenStats, screenUsuarios];
 
+// Real screenshots of the running app (screens.js) stand in for the hand-drawn
+// vector screens below. They decode asynchronously, so paintScreen keeps using
+// the vector version until one is ready and every mounted phone repaints when
+// its own screen arrives. With screens.js absent the vector path just stays.
+const SHOT_KEYS = ['login', 'registrar', 'dentro', 'frecuentes', 'historial', 'estadisticas', 'usuarios'];
+const SHOTS = new Array(SHOT_KEYS.length).fill(null);
+const shotWaiters = [];
+(function preloadShots() {
+  const src = window.PARKING_SCREENS;
+  if (!src) return;
+  SHOT_KEYS.forEach((key, i) => {
+    if (!src[key]) return;
+    const img = new Image();
+    img.onload = () => { SHOTS[i] = img; shotWaiters.forEach((fn) => fn(i)); };
+    img.src = src[key];
+  });
+})();
+
 function paintScreen(canvas, index) {
   const ctx = canvas.getContext('2d');
+  const shot = SHOTS[index];
+  if (shot) {
+    // Edge to edge, filling the whole display. The strip the dynamic island
+    // covers is baked INTO the capture — the app is shot with a safe-area top
+    // inset, so its own gradient runs behind the island exactly as it does on
+    // a real device (the app is a PWA with a black-translucent status bar).
+    // Painting that strip here instead left a flat seam against the gradient.
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(shot, 0, 0, canvas.width, canvas.height);
+    return;
+  }
   CTX = ctx;
   ctx.setTransform(canvas.width / W, 0, 0, canvas.width / W, 0, 0);
   ctx.clearRect(0, 0, W, H);
@@ -408,6 +437,15 @@ class Phone3D extends HTMLElement {
     this.dragYaw = 0; this.dragPitch = 0;
     this.velYaw = 0; this.velPitch = 0;
     this.yaw = this.targetYaw; this.pitch = this.targetPitch;
+    // Repaint if this phone's screenshot decodes after the phone is already up.
+    shotWaiters.push((i) => {
+      if (i !== this.screenIndex) return;
+      if (this.screenCanvas) {
+        paintScreen(this.screenCanvas, this.screenIndex);
+        if (this.screenTexture) this.screenTexture.needsUpdate = true;
+      }
+      if (this.mode === 'flat') this.drawFlat();
+    });
     this.boot();
   }
 
@@ -504,7 +542,12 @@ class Phone3D extends HTMLElement {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100);
-    camera.position.set(0, 0, 6.35);
+    // Distance is the sharpness lever. The fov is vertical, so the visible
+    // height is 2*z*tan(13°) whatever the box's aspect: at 6.35 the phone
+    // filled 71% of the frame and its screen landed on ~245 real px, so the
+    // 1356px texture was minified 5.5x and no capture resolution could look
+    // crisp. 4.95 leaves the body (plus its idle float) at ~94% of the frame.
+    camera.position.set(0, 0, 4.95);
     this.scene = scene; this.camera = camera;
 
     scene.environment = this.buildEnv(THREE, renderer);
@@ -566,8 +609,11 @@ class Phone3D extends HTMLElement {
     const group = new THREE.Group();
     group.name = 'iphone';
 
-    const titanium = new THREE.MeshStandardMaterial({ name: 'titanium', color: 0x8a8d93, metalness: 1, roughness: 0.44 });
-    const backGlass = new THREE.MeshStandardMaterial({ name: 'backGlass', color: 0x15161a, metalness: 0.3, roughness: 0.5 });
+    // Desert titanium, the finish in the reference photo: a warm champagne
+    // metal, not the cool grey this was. On a metalness:1 material the colour
+    // tints the reflection, so it reads gold under the scene's warm rim light.
+    const titanium = new THREE.MeshStandardMaterial({ name: 'titanium', color: 0xb9a184, metalness: 1, roughness: 0.42 });
+    const backGlass = new THREE.MeshStandardMaterial({ name: 'backGlass', color: 0x241f19, metalness: 0.3, roughness: 0.5 });
     const black = new THREE.MeshStandardMaterial({ name: 'bezel', color: 0x04050a, metalness: 0.1, roughness: 0.6 });
     const glass = new THREE.MeshPhysicalMaterial({
       name: 'coverGlass', color: 0xffffff, transparent: true, opacity: 0.05,
@@ -623,6 +669,8 @@ class Phone3D extends HTMLElement {
     const sw = bodyW - 0.06;
     const sh = sw * (H / W);
     const canvas = document.createElement('canvas');
+    // 1356 is exactly the screenshots' width (3x the 452pt screen), so a real
+    // screen lands on the texture 1:1 with no resampling softening the text.
     canvas.width = 1356; canvas.height = Math.round(1356 * (H / W));
     paintScreen(canvas, this.screenIndex);
     this.screenCanvas = canvas;
@@ -646,12 +694,12 @@ class Phone3D extends HTMLElement {
       depth: 0.03, bevelEnabled: true, bevelThickness: 0.008, bevelSize: 0.008, bevelSegments: 3, curveSegments: 18, steps: 1,
     });
     plateGeo.translate(0, 0, -depth / 2 - 0.032);
-    const plate = new THREE.Mesh(plateGeo, new THREE.MeshStandardMaterial({ name: 'cameraPlate', color: 0x1b1c21, metalness: 0.8, roughness: 0.35 }));
+    const plate = new THREE.Mesh(plateGeo, new THREE.MeshStandardMaterial({ name: 'cameraPlate', color: 0x2a241d, metalness: 0.8, roughness: 0.35 }));
     plate.name = 'cameraPlate';
     plate.position.set(-0.235, 0.715, 0);
     group.add(plate);
 
-    const lensBody = new THREE.MeshStandardMaterial({ name: 'lensRing', color: 0x6f7278, metalness: 1, roughness: 0.22 });
+    const lensBody = new THREE.MeshStandardMaterial({ name: 'lensRing', color: 0x968870, metalness: 1, roughness: 0.22 });
     const lensGlass = new THREE.MeshPhysicalMaterial({ name: 'lensGlass', color: 0x05070c, metalness: 0.6, roughness: 0.08, clearcoat: 1 });
     [[-0.115, 0.105], [0.115, 0.105], [0, -0.115]].forEach(([dx, dy], i) => {
       const ring = new THREE.Mesh(new THREE.CylinderGeometry(0.098, 0.098, 0.028, 40), lensBody);
