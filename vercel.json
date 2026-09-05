@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/project/publicidad-estacionamiento.html" },
+    { "source": "/support.js", "destination": "/project/support.js" },
+    { "source": "/phone3d.js", "destination": "/project/phone3d.js" },
+    { "source": "/screens.js", "destination": "/project/screens.js" }
+  ]
+}
