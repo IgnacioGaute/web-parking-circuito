@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<script src="./screens.js"></script>
+<script src="./phone3d.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #0a0b0d; color: #e6e7ea; font-family: Manrope, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: #d9a441; text-decoration: none; }
+  a:hover { color: #e8bd6b; }
+  @keyframes pulseDot { 0%,100% { opacity: 1 } 50% { opacity: .3 } }
+  @keyframes attentionGlow { 0%,100% { box-shadow: 0 0 0 0 rgba(240,97,110,.45) } 50% { box-shadow: 0 0 0 6px rgba(240,97,110,0) } }
+  @keyframes floatY { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: translateY(0) } }
+  @keyframes sheen { from { transform: translateX(-120%) rotate(8deg) } to { transform: translateX(220%) rotate(8deg) } }
+
+  /* --- Fits the window it is opened in ------------------------------
+     The page was authored at one desktop size: 62px display type, a
+     700px-tall hero phone and two-column grids that never collapse. A
+     short or zoomed-in window cut the phone off; a narrow one pushed
+     "Instalar la app" past the right edge, where the wrapper's
+     overflow-x: clip made it unreachable. Sizes below are fluid and the
+     columns collapse at 900px. Inline styles outrank a stylesheet, so
+     the overrides need !important. */
+  #hero h1 { font-size: clamp(36px, 4.4vw, 62px) !important; }
+  #hero [data-lede] { font-size: clamp(16px, 1.35vw, 19px) !important; }
+  #funciones h2 { font-size: clamp(28px, 3.3vw, 44px) !important; }
+  #funciones [data-copy] p { font-size: clamp(15px, 1.25vw, 17px) !important; }
+  #funciones [data-copy] ul { font-size: clamp(13px, 1.05vw, 14.5px) !important; }
+  #extras h2 { font-size: clamp(30px, 3.4vw, 46px) !important; }
+
+  /* Heights track the viewport rather than being pinned in px. */
+  #hero [data-phone-frame] { height: min(700px, 70vh) !important; }
+  #funciones [data-phone-host] { height: min(820px, 84vh) !important; }
+  /* The 7 copy blocks are stacked in ONE grid cell rather than positioned
+     absolutely, so the wrapper measures the tallest of them by itself. It
+     used to carry a hand-set min-height, which any viewport that wrapped the
+     text past that guess left overflowing — the last bullet ran into the
+     progress dots. Stacking also keeps the block from resizing step to step. */
+  #funciones [data-copy-wrap] { display: grid !important; min-height: 0 !important; }
+  #funciones [data-copy] { position: relative !important; grid-area: 1 / 1 !important; }
+
+  @media (max-width: 900px) {
+    #hero { grid-template-columns: 1fr !important; gap: 40px !important; }
+    #hero [data-hero-phone] { max-width: 320px !important; margin-inline: auto; }
+    #hero [data-phone-frame] { height: min(560px, 56vh) !important; }
+    /* Phone above the copy, so both halves stay on screen in one column. */
+    #funciones [data-rail] { grid-template-columns: 1fr !important;
+      grid-template-rows: auto auto !important; gap: 18px !important;
+      align-content: center !important; }
+    #funciones [data-phone-host] { order: -1; height: 38vh !important; }
+    #funciones [data-dots] { margin-top: 26px !important; }
+  }
+
+</style>
+</helmet>
+
+<div style="min-height: 100vh; background: #0a0b0d; background-image: radial-gradient(70vw 50vh at 88% -6%, rgba(217,164,65,.18) 0%, transparent 78%), radial-gradient(rgba(255,255,255,.05) 1px, transparent 0); background-size: auto, 14px 14px; overflow-x: clip;">
+
+  <section id="hero" style="max-width: 1080px; margin: 0 auto; padding: clamp(40px, 6vh, 74px) 28px clamp(56px, 8vh, 96px); display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center;">
+    <div style="animation: riseIn .7s both;">
+      <div style="display: inline-flex; align-items: center; gap: 7px; background: rgba(52,211,153,.14); border-radius: 999px; padding: 7px 13px; margin-bottom: 26px;">
+        <span style="width: 6px; height: 6px; border-radius: 50%; background: #34d399; animation: pulseDot 2s ease-in-out infinite;"></span>
+        <span style="font-size: 11.5px; font-weight: 700; color: #34d399;">Sistema activo</span>
+      </div>
+      <h1 style="margin: 0 0 22px; font-size: 62px; line-height: 1.02; letter-spacing: -0.035em; font-weight: 800; text-wrap: balance;">Entradas y salidas,<br />en un toque.</h1>
+      <p data-lede="" style="margin: 0 0 34px; font-size: 19px; line-height: 1.55; color: #8b8d97; max-width: 30ch; text-wrap: pretty;">La app para el encargado de la playa: registrás la patente, ves quién está dentro y cerrás el turno sin papel ni planillas.</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 34px;">
+        <a href="#funciones" style="border: 1px solid rgba(255,255,255,.16); color: #e6e7ea; font-weight: 700; font-size: 15px; padding: 15px 26px; border-radius: 13px;">Ver cómo funciona</a>
+      </div>
+      <div style="display: flex; gap: 30px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,.08);">
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 25px; font-weight: 700; color: #d9a441;">2 seg</div>
+          <div style="font-size: 12px; color: #5b5d66; font-weight: 600; margin-top: 4px;">por registro</div>
+        </div>
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 25px; font-weight: 700;">0</div>
+          <div style="font-size: 12px; color: #5b5d66; font-weight: 600; margin-top: 4px;">planillas de papel</div>
+        </div>
+        <div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 25px; font-weight: 700;">100%</div>
+          <div style="font-size: 12px; color: #5b5d66; font-weight: 600; margin-top: 4px;">offline en el celu</div>
+        </div>
+      </div>
+    </div>
+
+      <div data-hero-phone="" style="width: 100%; max-width: 440px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+        <div data-phone-frame="" style="width: 100%; height: 700px;">
+          <x-import component-from-global-scope="phone-3d" yaw="-18" pitch="7" screen-index="1" hint-size="100%,700px" style="width: 100%; height: 100%;"></x-import>
+        </div>
+        <span style="font-size: 12px; font-weight: 600; color: #5b5d66; letter-spacing: .02em;">Arrastrá el celular para girarlo</span>
+      </div>
+  </section>
+
+  <!-- The tour's length IS its scroll cost: update() spreads the 6 transitions
+       across (height - 100vh - LEAD), so of this trailing 1460px the first 220
+       are the settle zone and the rest is ~207px per screen — two wheel notches
+       each, so a single flick can't skip one. (A 720vh rail charged ~950px per
+       screen; 620px made one notch skip a whole one.) -->
+  <section id="funciones" ref="{{ railRef }}" style="position: relative; height: calc(100vh + 1460px); padding: 0 28px;">
+    <div data-rail="" style="position: sticky; top: 0; height: 100vh; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; max-width: 1080px; margin: 0 auto;">
+
+      <div style="display: flex; flex-direction: column;">
+        <div data-copy-wrap="" style="position: relative; min-height: 380px;">
+          <div data-copy="0" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 1; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">01 — INGRESO</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Ves tu nombre, tocás y entrás</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Cada operador tiene su propio PIN de 4 dígitos. Sin contraseñas para recordar ni usuarios compartidos: elegís tu turno y entrás en dos toques.</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Un PIN por operador, no una clave general de la playa</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Pensado para tocar con guantes o las manos sucias</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Si te equivocás, el teclado tiembla y te deja reintentar</li>
+            </ul>
+          </div>
+          <div data-copy="1" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">02 — REGISTRAR</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">La patente y listo</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Placa, tipo de vehículo y confirmar: tres toques y el auto ya está en la lista de "Dentro", con el contador actualizado al instante.</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Teclado de patente en mayúsculas, sin errores de tipeo</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Dentro, hoy y estadía promedio, siempre visibles arriba</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Si el auto ya vino antes, se completa solo con sus datos</li>
+            </ul>
+          </div>
+          <div data-copy="2" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">03 — DENTRO</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Quién está adentro, ahora</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Cada tarjeta muestra hace cuánto entró el vehículo. Buscás la placa, tocás "Registrar salida" y listo: el egreso queda cerrado al toque.</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Búsqueda instantánea por patente entre los vehículos dentro</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #f0616e;">·</span>Los que superan el tiempo límite se destacan en rojo</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Confirmación en pantalla antes de cerrar cualquier salida</li>
+            </ul>
+          </div>
+          <div data-copy="3" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">04 — FRECUENTES</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Los de siempre, sin tipear</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Desde la segunda visita, la patente queda guardada con sus datos y todo su historial de movimientos — no hace falta volver a cargarla nunca.</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Contador de visitas por vehículo, a simple vista</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Entrada en un toque desde la ficha del vehículo</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Datos editables: dueño, teléfono, lo que necesites</li>
+            </ul>
+          </div>
+          <div data-copy="4" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">05 — HISTORIAL</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Todo queda, y se exporta</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Los registros se agrupan por día. Filtrás por placa, tipo, fecha u horario, y bajás cualquier jornada como PDF listo para imprimir o archivar.</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Un PDF por día, con un solo toque</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Queda registrado quién abrió y quién cerró cada visita</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Carga progresiva: la lista nunca se satura</li>
+            </ul>
+          </div>
+          <div data-copy="5" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">06 — ESTADÍSTICAS</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Cómo se movió la playa</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Ocupación, tendencia diaria y actividad por hora en gráficos que se actualizan solos. Filtrás por fecha, vehículo u operador y todo se recalcula junto.</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Tendencia diaria y picos de actividad por hora</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Reparto entre autos y motos, y patentes más frecuentes</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Ranking de tickets registrados por operador</li>
+            </ul>
+          </div>
+          <div data-copy="6" style="position: absolute; top: 0; left: 0; width: 100%; opacity: 0; transition: opacity .45s ease, transform .45s ease;">
+            <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">07 — USUARIOS Y TURNOS</div>
+            <h2 style="margin: 16px 0 18px; font-size: 44px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Quién está en turno</h2>
+            <p style="margin: 0 0 22px; font-size: 17px; line-height: 1.6; color: #8b8d97; max-width: 42ch; text-wrap: pretty;">Todos los operadores del sistema, con su rol y si están en turno ahora mismo. Cada entrada y cada salida queda firmada con su nombre.</p>
+            <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #e6e7ea;">
+              <li style="display: flex; gap: 10px;"><span style="color: #34d399;">·</span>Estado en turno / fuera de turno, en vivo</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Roles de administrador y operador</li>
+              <li style="display: flex; gap: 10px;"><span style="color: #d9a441;">·</span>Trazabilidad total: nada queda sin autor</li>
+            </ul>
+          </div>
+        </div>
+        <div data-dots="" style="margin-top: 30px; display: flex; gap: 7px;">
+          <span data-dot="0" style="width: 26px; height: 3px; border-radius: 2px; background: #d9a441; transition: background .3s;"></span>
+          <span data-dot="1" style="width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); transition: background .3s;"></span>
+          <span data-dot="2" style="width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); transition: background .3s;"></span>
+          <span data-dot="3" style="width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); transition: background .3s;"></span>
+          <span data-dot="4" style="width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); transition: background .3s;"></span>
+          <span data-dot="5" style="width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); transition: background .3s;"></span>
+          <span data-dot="6" style="width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); transition: background .3s;"></span>
+        </div>
+      </div>
+
+      <div ref="{{ phoneHostRef }}" data-phone-host="" style="width: 100%; height: 88vh; max-height: 820px;">
+        <x-import component-from-global-scope="phone-3d" yaw="-8" pitch="4" hint-size="100%,100%" style="width: 100%; height: 100%;"></x-import>
+      </div>
+    </div>
+  </section>
+
+  <section id="extras" style="max-width: 1080px; margin: 0 auto; padding: 40px 28px 96px;">
+    <div style="max-width: 46ch; margin-bottom: 44px;">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; color: #d9a441; letter-spacing: .12em;">08 — EL RESTO DEL SISTEMA</div>
+      <h2 style="margin: 16px 0 14px; font-size: 42px; line-height: 1.06; letter-spacing: -0.03em; font-weight: 800;">Configurable por quien la usa</h2>
+      <p style="margin: 0; font-size: 17px; line-height: 1.6; color: #8b8d97; text-wrap: pretty;">La playa cambia y el sistema se adapta sin tocar código.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+      <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px;">
+        <div style="width: 34px; height: 34px; border-radius: 11px; background: rgba(217,164,65,.18); color: #d9a441; display: flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 18px;">＋</div>
+        <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em;">Campos personalizados</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #8b8d97;">Agregá al formulario los campos que necesites — texto, número, sí/no o lista — y ordenálos arrastrando. Placa y tipo quedan fijos.</p>
+      </div>
+      <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px;">
+        <div style="width: 34px; height: 34px; border-radius: 11px; background: rgba(240,97,110,.14); color: #f0616e; display: flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 18px;">!</div>
+        <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em;">Alertas de tiempo</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #8b8d97;">Definís cuántos minutos puede estar un vehículo dentro. Al pasarse, la tarjeta se marca "Atención" para todos los operadores.</p>
+      </div>
+      <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px;">
+        <div style="width: 34px; height: 34px; border-radius: 11px; background: rgba(217,164,65,.18); color: #d9a441; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-weight: 800; margin-bottom: 18px;">••</div>
+        <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em;">Ingreso con PIN</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #8b8d97;">Cada operador elige su nombre y entra con un PIN de 4 dígitos. Rápido con guantes, y sin contraseñas anotadas en la garita.</p>
+      </div>
+      <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px;">
+        <div style="width: 34px; height: 34px; border-radius: 11px; background: rgba(52,211,153,.14); color: #34d399; display: flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 18px;">↓</div>
+        <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em;">Se instala como app</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #8b8d97;">Desde el navegador queda un ícono en la pantalla de inicio, a pantalla completa. No hace falta pasar por ninguna tienda.</p>
+      </div>
+      <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px;">
+        <div style="width: 34px; height: 34px; border-radius: 11px; background: rgba(217,164,65,.18); color: #d9a441; display: flex; align-items: center; justify-content: center; font-weight: 800; margin-bottom: 18px;">?</div>
+        <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em;">Tour guiado</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #8b8d97;">Un recorrido paso a paso que resalta cada pantalla real de la app. Se abre cuando quieras desde el botón de ayuda: el operador nuevo aprende solo.</p>
+      </div>
+      <div style="background: #121317; border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px; display: flex; flex-direction: column;">
+        <div style="display: flex; gap: 7px; margin-bottom: 18px;">
+          <div style="width: 34px; height: 34px; border-radius: 11px; background: #0a0b0d; border: 1px solid rgba(255,255,255,.14);"></div>
+          <div style="width: 34px; height: 34px; border-radius: 11px; background: #f7f7f8; border: 1px solid rgba(255,255,255,.14);"></div>
+        </div>
+        <h3 style="margin: 0 0 10px; font-size: 19px; font-weight: 800; letter-spacing: -0.02em;">Modo claro y oscuro</h3>
+        <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #8b8d97;">Oscuro para el turno noche, claro para el sol del mediodía. Cambia al instante y se recuerda en el dispositivo.</p>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+// Index 0 of each array is the login screen (no bottom nav in the real
+// app); 1–6 are Registrar…Usuarios, same order as phone3d.js's SCREENS.
+const ROT_Y = [-8, -24, 16, -18, 22, -10, 14];
+const ROT_X = [4, 9, -5, 11, -4, 8, -6];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.rail = null;
+    this.host = null;
+    this.railRef = (el) => { this.rail = el; this.attach(); };
+    this.phoneHostRef = (el) => { this.host = el; this.attach(); };
+    this.active = -1;
+  }
+
+  phone() {
+    if (this.phoneEl) return this.phoneEl;
+    const el = this.host && this.host.querySelector('phone-3d');
+    if (el && typeof el.setAngle === 'function') this.phoneEl = el;
+    return this.phoneEl;
+  }
+
+  attach() {
+    if (!this.rail || !this.host || this.attached) return;
+    this.attached = true;
+    this.copies = Array.from(this.rail.querySelectorAll('[data-copy]'));
+    this.dots = Array.from(this.rail.querySelectorAll('[data-dot]'));
+    this.onScroll = () => {
+      if (this.raf) return;
+      this.raf = requestAnimationFrame(() => { this.raf = null; this.update(); });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll);
+    this.update();
+  }
+
+  componentWillUnmount() {
+    if (this.onScroll) {
+      window.removeEventListener('scroll', this.onScroll);
+      window.removeEventListener('resize', this.onScroll);
+    }
+    if (this.raf) cancelAnimationFrame(this.raf);
+  }
+
+  update() {
+    const rect = this.rail.getBoundingClientRect();
+    // A settle zone at the head of the rail. Without it the tour began
+    // advancing on the very first pixel past the top, while the panel was
+    // still finishing its pin — so the copy and phone could be half off
+    // screen with no way to scroll to them (scrolling changed the screen
+    // instead of moving the page). Those first LEAD px hold screen 1 in
+    // place until everything is centred and on screen.
+    const LEAD = 220;
+    const span = this.rail.offsetHeight - window.innerHeight - LEAD;
+    const p = Math.max(0, Math.min(1, (-rect.top - LEAD) / (span || 1)));
+    const n = ROT_Y.length;
+    const f = p * (n - 1);
+    const i = Math.min(n - 2, Math.floor(f));
+    const raw = f - i;
+    const t = raw * raw * (3 - 2 * raw);
+    const lerp = (a, b) => a + (b - a) * t;
+    const phone = this.phone();
+    if (phone) phone.setAngle(lerp(ROT_Y[i], ROT_Y[i + 1]), lerp(ROT_X[i], ROT_X[i + 1]));
+
+    const active = Math.round(f);
+    if (active === this.active) return;
+    this.active = active;
+    if (phone) phone.setScreen(active);
+    this.copies.forEach((el, k) => {
+      const on = k === active;
+      el.style.opacity = on ? '1' : '0';
+      el.style.transform = on ? 'translateY(0)' : 'translateY(' + (k < active ? -14 : 14) + 'px)';
+      el.style.pointerEvents = on ? 'auto' : 'none';
+    });
+    this.dots.forEach((el, k) => {
+      el.style.background = k === active ? '#d9a441' : 'rgba(255,255,255,.14)';
+    });
+  }
+
+  renderVals() {
+    return { railRef: this.railRef, phoneHostRef: this.phoneHostRef };
+  }
+}
+</script>
+</body>
+</html>
